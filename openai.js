@@ -1,13 +1,9 @@
-
 import express from "express";
 import multer from "multer";
 import { OpenAI } from "openai";
-
 const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
-
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-
 router.post("/text", async (req, res) => {
   try {
     const { prompt } = req.body;
@@ -20,7 +16,6 @@ router.post("/text", async (req, res) => {
     res.status(500).json({ error: "OpenAI text error" });
   }
 });
-
 router.post("/vision", upload.single("image"), async (req, res) => {
   try {
     const prompt = req.body.prompt || "Describe the image.";
@@ -39,5 +34,4 @@ router.post("/vision", upload.single("image"), async (req, res) => {
     res.status(500).json({ error: "OpenAI vision error" });
   }
 });
-
 export default router;
